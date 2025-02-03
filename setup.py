@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='thevisiblehand',
@@ -8,7 +8,6 @@ setup(
     author='Abhishek Kumar',
     author_email='abhishekk962@gmail.com',
     license='MIT',
-    packages=find_packages(),
     install_requires=[
         'mediapipe',
         'numpy',
