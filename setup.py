@@ -10,8 +10,5 @@ setup(
     license='MIT',
     install_requires=[
         'mediapipe',
-        'matplotlib',
-        'opencv-python',
-        'git+https://github.com/facebookresearch/sam2.git'
     ],
 )
