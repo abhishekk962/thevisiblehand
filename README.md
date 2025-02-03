@@ -8,12 +8,12 @@ This repository showcases a method for segmenting hands in videos using Google's
 #### **Method 1: Single-Frame Prompting**
 This approach uses separate point prompts to identify each hand in a single frame. The SAM2 model then tracks and segments the hands throughout the video, ensuring that each hand is uniquely masked.
 
-![Method 1 prompt](assets\test.mp4-single-preview-1.png) Method 1 prompt (Single Frame - Unique Prompts)
+![Method 1 prompt](/assets/test.mp4-single-preview-1.png) Method 1 prompt (Single Frame - Unique Prompts)
 
 #### **Method 2: Multi-Frame Prompting with Entropy Filtering**
 This approach uses multiple point prompts across multiple frames to generate a single mask covering all hands. It then filters out frames with high entropy values, reducing artifacts in the mask and improving segmentation quality. Using multiple frames improves the consistency of the masks and reduces artifacts.
 
-![Method 2 prompts](assets\test.mp4-multi-preview-1.png)![Method 2 prompts](assets\test.mp4-multi-preview-2.png) Method 2 prompt (Multi Frame - Combined Prompt)
+![Method 2 prompts](/assets/test.mp4-multi-preview-1.png)![Method 2 prompts](/assets/test.mp4-multi-preview-2.png) Method 2 prompt (Multi Frame - Combined Prompt)
 
 ---
 ## Usage
