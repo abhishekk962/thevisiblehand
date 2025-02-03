@@ -23,7 +23,7 @@ setup(
     ],
     entry_points = {
         'console_scripts': [
-            'PKG_NAME = thevisiblehand.cli:main',
+            'thevisiblehand = thevisiblehand.cli:main',
         ],
     }
 )
