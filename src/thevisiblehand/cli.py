@@ -5,9 +5,9 @@ def main():
     parser = argparse.ArgumentParser(description="A tool to mask hands in videos.")
     parser.add_argument("input_file_path", type=str, help="Path to the input video file.")
     parser.add_argument("output_file_path", type=str, help="Path to save the output video file.")
-    parser.add_argument("--num_hands", "-n", type=int, default=2, help="Number of hands to detect.")
-    parser.add_argument("--method", "-m", type=str, choices=["single", "multi"], default="single", help="Method to use for hand detection.")
-    parser.add_argument("--preview", "-p", action="store_true", help="Preview the results.")
+    parser.add_argument("--hands", type=int, default=2, help="Number of hands in the video.")
+    parser.add_argument("--method", type=str, choices=["single", "multi"], default="single", help="Method to use for hand detection.")
+    parser.add_argument("--preview", action="store_true", help="Preview the results.")
 
     args = parser.parse_args()
 

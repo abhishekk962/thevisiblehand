@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='thevisiblehand',
-    version='0.1.2',    
+    version='0.1.3',    
     description='A Python package to mask hands in videos using Segment Anything Model 2 (SAM2) and Mediapipe.',
     url='https://github.com/abhishekk962/thevisiblehand',
     author='Abhishek Kumar',

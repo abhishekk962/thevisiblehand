@@ -16,6 +16,56 @@ This approach uses multiple point prompts across multiple frames to generate a s
 ![Method 2 prompts](assets\test.mp4-multi-preview-1.png)![Method 2 prompts](assets\test.mp4-multi-preview-2.png) Method 2 prompt (Multi Frame - Combined Prompt)
 
 ---
+## Usage
+
+To install the package, use the following command:
+```sh
+pip install git+https://github.com/abhishekk962/thevisiblehand
+```
+
+To display the help message, use:
+```sh
+thevisiblehand --help
+```
+
+### Command Line Interface (CLI) Usage
+
+```sh
+usage: thevisiblehand [-h] [--num_hands NUM_HANDS] [--method {single,multi}] [--preview]
+                      input_file_path output_file_path
+
+A tool to mask hands in videos.
+
+positional arguments:
+  input_file_path       Path to the input video file.
+  output_file_path      Path to save the output video file.
+
+options:
+  -h, --help            show this help message and exit
+  --num_hands NUM_HANDS, -n NUM_HANDS
+                        Number of hands to detect.
+  --method {single,multi}, -m {single,multi}
+                        Method to use for hand detection.
+  --preview, -p         Preview the results.
+```
+
+Example usage:
+```sh
+thevisiblehand test.mp4 output.mp4 -m multi -p
+```
+
+### Python API Usage
+
+```python
+from thevisiblehand import VideoProcessor
+
+processor = VideoProcessor('test.mp4', 'output.mp4')
+processor.process_video()
+processor.preview_results()
+```
+
+
+---
 ## **Approach**
 The core approach of this project involves using MediaPipe to detect hands but only leveraging wrist positions to generate prompts for SAM2. Using all hand landmarks can lead to incorrect mask formations, concentrating around the palm instead of covering the entire hand. 
 ![Image showing poor mask formation when all hand landmarks are used](/assets/artifacts2.png) Poor mask formation when all hand landmarks are used
