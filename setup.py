@@ -10,14 +10,8 @@ setup(
     license='MIT',
     install_requires=[
         'mediapipe',
-        'numpy',
-        'imageio',
         'matplotlib',
-        'Pillow',
-        'torch',
-        'torchvision',
         'opencv-python',
-        'scipy',
         'git+https://github.com/facebookresearch/sam2.git'
     ],
 )
