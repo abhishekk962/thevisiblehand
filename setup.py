@@ -21,9 +21,4 @@ setup(
         'scipy',
         'git+https://github.com/facebookresearch/sam2.git'
     ],
-    entry_points = {
-        'console_scripts': [
-            'PKG_NAME = thevisiblehand.cli:main',
-        ],
-    }
 )
