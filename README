@@ -31,7 +31,7 @@ thevisiblehand --help
 ### Command Line Interface (CLI) Usage
 
 ```sh
-usage: thevisiblehand [-h] [--num_hands NUM_HANDS] [--method {single,multi}] [--preview]
+usage: thevisiblehand [-h] [--hands HANDS] [--method {single,multi}] [--preview]
                       input_file_path output_file_path
 
 A tool to mask hands in videos.
@@ -42,11 +42,10 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
-  --num_hands NUM_HANDS, -n NUM_HANDS
-                        Number of hands to detect.
-  --method {single,multi}, -m {single,multi}
+  --hands HANDS         Number of hands in the video.
+  --method {single,multi}
                         Method to use for hand detection.
-  --preview, -p         Preview the results.
+  --preview             Preview the results.
 ```
 
 Example usage:
