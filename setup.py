@@ -1,0 +1,29 @@
+from setuptools import setup, find_packages
+
+setup(
+    name='thevisiblehand',
+    version='0.1.0',    
+    description='A Python package to mask hands in videos using Segment Anything Model 2 (SAM2) and Mediapipe.',
+    url='https://github.com/abhishekk962/thevisiblehand',
+    author='Abhishek Kumar',
+    author_email='abhishekk962@gmail.com',
+    license='MIT',
+    packages=find_packages(),
+    install_requires=[
+        'mediapipe',
+        'numpy',
+        'imageio',
+        'matplotlib',
+        'Pillow',
+        'torch',
+        'torchvision',
+        'opencv-python',
+        'scipy',
+        'git+https://github.com/facebookresearch/sam2.git'
+    ],
+    entry_points = {
+        'console_scripts': [
+            'PKG_NAME = thevisiblehand.cli:main',
+        ],
+    }
+)
