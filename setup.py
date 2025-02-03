@@ -19,7 +19,7 @@ setup(
         'torchvision',
         'opencv-python',
         'scipy',
-        'sam2 @ git+https://github.com/facebookresearch/sam2.git'
+        'sam-2 @ git+https://github.com/facebookresearch/sam2.git'
     ],
     entry_points = {
         'console_scripts': [
