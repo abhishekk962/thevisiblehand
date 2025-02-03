@@ -50,7 +50,7 @@ options:
 
 Example usage:
 ```sh
-thevisiblehand test.mp4 output.mp4 -m multi -p
+thevisiblehand test.mp4 output.mp4 --method multi --preview
 ```
 
 ### Python API Usage
@@ -58,9 +58,14 @@ thevisiblehand test.mp4 output.mp4 -m multi -p
 ```python
 from thevisiblehand import VideoProcessor
 
-processor = VideoProcessor('test.mp4', 'output.mp4')
-processor.process_video()
+# Create a processor object
+processor = VideoProcessor('path/to/input.mp4', 'path/to/output.mp4')
+
+# Preview the results of the chosen method
 processor.preview_results()
+
+# Process and save the entire masked video
+processor.process_video()
 ```
 
 
