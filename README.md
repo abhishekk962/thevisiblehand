@@ -8,25 +8,40 @@ This repository showcases a method for segmenting hands in videos using Google's
 #### **Method 1: Single-Frame Prompting**
 This approach uses separate point prompts to identify each hand in a single frame. The SAM2 model then tracks and segments the hands throughout the video, ensuring that each hand is uniquely masked.
 
-![Method 1 prompt](/assets/test.mp4-single-preview-1.png) Method 1 prompt (Single Frame - Unique Prompts)
+<img src="/assets/test.mp4-single-preview-1.png" width="50%">
+*Method 1 prompt (Single Frame - Unique Prompts)*
 
 #### **Method 2: Multi-Frame Prompting with Entropy Filtering**
 This approach uses multiple point prompts across multiple frames to generate a single mask covering all hands. It then filters out frames with high entropy values, reducing artifacts in the mask and improving segmentation quality. Using multiple frames improves the consistency of the masks and reduces artifacts.
 
-![Method 2 prompts](/assets/test.mp4-multi-preview-1.png)![Method 2 prompts](/assets/test.mp4-multi-preview-2.png) Method 2 prompt (Multi Frame - Combined Prompt)
+<img src="/assets/test.mp4-multi-preview-1.png" width="50%">
+<img src="/assets/test.mp4-multi-preview-2.png" width="50%">
+*Method 2 prompt (Multi Frame - Combined Prompt)*
 
 ---
-## Usage
+## Instal
 
 To install the package, use the following command:
 ```sh
 pip install git+https://github.com/abhishekk962/thevisiblehand
 ```
 
-To display the help message, use:
-```sh
-thevisiblehand --help
+
+### Python API Usage
+
+```python
+from thevisiblehand import VideoProcessor
+
+# Create a processor object
+processor = VideoProcessor('path/to/input.mp4', 'path/to/output.mp4')
+
+# Preview the results of the chosen method
+processor.preview_results()
+
+# Process and save the entire masked video
+processor.process_video()
 ```
+
 
 ### Command Line Interface (CLI) Usage
 
@@ -53,37 +68,26 @@ Example usage:
 thevisiblehand test.mp4 output.mp4 --method multi --preview
 ```
 
-### Python API Usage
-
-```python
-from thevisiblehand import VideoProcessor
-
-# Create a processor object
-processor = VideoProcessor('path/to/input.mp4', 'path/to/output.mp4')
-
-# Preview the results of the chosen method
-processor.preview_results()
-
-# Process and save the entire masked video
-processor.process_video()
-```
-
-
 ---
 ## **Approach**
 The core approach of this project involves using MediaPipe to detect hands but only leveraging wrist positions to generate prompts for SAM2. Using all hand landmarks can lead to incorrect mask formations, concentrating around the palm instead of covering the entire hand. 
-![Image showing poor mask formation when all hand landmarks are used](/assets/artifacts2.png) Poor mask formation when all hand landmarks are used
+<img src="/assets/artifacts2.png" width="50%">)
+*Poor mask formation when all hand landmarks are used*
 
 Additionally, separate and unique prompts prevent the model from generating artifacts, such as mistakenly masking the neck. 
 
-![Image showing incorrect neck masking](/assets/artifacts1.png) Incorrect neck masking
+<img src="/assets/artifacts1.png" width="50%">
+*Incorrect neck masking*
 
-![Image showing correct hand masking](/assets/clean2.png) Correct hand masking using Method 1
+<img src="/assets/clean2.png" width="50%">
+*Correct hand masking using Method 1*
 
 The project also utilizes SAM2's capability of identifying objects across multiple frames to enhance mask quality. However, multi-frame masking can introduce artifacts. To counter this, an entropy-based filtering method is applied, selecting only frames with high-quality masks.
 
-![Image showing a low-entropy mask](/assets/clean1.png) A low-entropy mask with Method 2
-![Image showing a high-entropy mask](/assets/artifacts1.png) A high-entropy mask
+<img src="/assets/clean1.png" width="50%">
+*A low-entropy mask with Method 2*
+<img src="/assets/artifacts1.png" width="50%">
+*A high-entropy mask*
 
 ---
 ## **Further Enhancements**
