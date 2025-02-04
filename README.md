@@ -8,20 +8,20 @@ This repository showcases a method for segmenting hands in videos using Google's
 #### **Method 1: Single-Frame Prompting**
 This approach uses separate point prompts to identify each hand in a single frame. The SAM2 model then tracks and segments the hands throughout the video, ensuring that each hand is uniquely masked.
 
-<img src="/assets/test.mp4-single-preview-1.png" width="50%">
+<div align="center"><img src="/assets/test.mp4-single-preview-1.png" width="40%"></div>
 
-*Method 1 prompt (Single Frame - Unique Prompts)*
+*Method 1 prompt (Single Frame - Unique Prompts)* 
+
 
 #### **Method 2: Multi-Frame Prompting with Entropy Filtering**
 This approach uses multiple point prompts across multiple frames to generate a single mask covering all hands. It then filters out frames with high entropy values, reducing artifacts in the mask and improving segmentation quality. Using multiple frames improves the consistency of the masks and reduces artifacts.
 
-<img src="/assets/test.mp4-multi-preview-1.png" width="50%">
-<img src="/assets/test.mp4-multi-preview-2.png" width="50%">
+<div align="center"> <img src="/assets/test.mp4-multi-preview-1.png" width="40%"><img src="/assets/test.mp4-multi-preview-2.png" width="40%"></div> 
 
-*Method 2 prompt (Multi Frame - Combined Prompt)*
+*Method 2 prompt (Multi Frame - Combined Prompt)* 
 
 ---
-## Instal
+## Installation & Usage
 
 To install the package, use the following command:
 ```sh
@@ -74,29 +74,22 @@ thevisiblehand test.mp4 output.mp4 --method multi --preview
 ## **Approach**
 The core approach of this project involves using MediaPipe to detect hands but only leveraging wrist positions to generate prompts for SAM2. Using all hand landmarks can lead to incorrect mask formations, concentrating around the palm instead of covering the entire hand.
 
-<img src="/assets/artifacts2.png" width="50%">
+<div align="center"> <img src="/assets/artifacts2.png" width="40%"></div> 
 
 *Poor mask formation when all hand landmarks are used*
 
 Additionally, separate and unique prompts prevent the model from generating artifacts, such as mistakenly masking the neck. 
 
-<img src="/assets/artifacts1.png" width="50%">
+<div align="center"><img src="/assets/artifacts1.png" width="40%"><img src="/assets/clean2.png" width="40%"></div> 
 
-*Incorrect neck masking*
-
-<img src="/assets/clean2.png" width="50%">
-
-*Correct hand masking using Method 1*
+*Incorrect neck masking (left) and correct hand masking (right) using Method 1*
 
 The project also utilizes SAM2's capability of identifying objects across multiple frames to enhance mask quality. However, multi-frame masking can introduce artifacts. To counter this, an entropy-based filtering method is applied, selecting only frames with high-quality masks.
 
-<img src="/assets/clean1.png" width="50%">
+<div align="center"><img src="/assets/artifacts1.png" width="40%"><img src="/assets/clean1.png" width="40%"></div> 
 
-*A low-entropy mask with Method 2*
+*A high-entropy mask (left) and a low-entropy mask (right) using Method 2*
 
-<img src="/assets/artifacts1.png" width="50%">
-
-*A high-entropy mask*
 
 ---
 ## **Further Enhancements**
