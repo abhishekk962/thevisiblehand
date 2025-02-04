@@ -13,7 +13,7 @@ def main():
     args = parser.parse_args()
 
     # Create a VideoProcessor instance
-    processor = VideoProcessor(args.input_file_path, args.output_file_path, args.num_hands, args.method)
+    processor = VideoProcessor(args.input_file_path, args.output_file_path, args.hands, args.method)
     try:
         if args.preview:
             # Preview the results of the hand detection and masking

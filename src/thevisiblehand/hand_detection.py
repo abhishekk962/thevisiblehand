@@ -79,9 +79,7 @@ def show_points(coords, labels, ax, marker_size=200):
 def preview_results(results, in_filepath, frame_names, method):
     """
     Preview the results of the hand masking and save the preview in the specified directory.
-    Also return the image for display in a notebook.
     """
-    images = []
     for r, res in enumerate(results):
         plt.figure(figsize=(9, 6))
         plt.axis("off")
@@ -94,8 +92,3 @@ def preview_results(results, in_filepath, frame_names, method):
         plt.savefig(out_filepath, dpi=300, format='png', bbox_inches='tight', pad_inches=0)
         plt.close()
         print(f"Preview saved at {out_filepath}")
-        
-        # Load the saved image and append to the list
-        images.append(Image.open(out_filepath))
-    
-    return images
