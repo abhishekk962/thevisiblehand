@@ -12,7 +12,6 @@ This approach uses separate point prompts to identify each hand in a single fram
 
 *Method 1 prompt (Single Frame - Unique Prompts)* 
 
-
 #### **Method 2: Multi-Frame Prompting with Entropy Filtering**
 This approach uses multiple point prompts across multiple frames to generate a single mask covering all hands. It then filters out frames with high entropy values, reducing artifacts in the mask and improving segmentation quality. Using multiple frames improves the consistency of the masks and reduces artifacts.
 
@@ -20,7 +19,9 @@ This approach uses multiple point prompts across multiple frames to generate a s
 
 *Method 2 prompt (Multi Frame - Combined Prompt)* 
 
----
+## Examples
+Find the sample data and the outputs produced by both methods in the [examples](examples) folder.
+
 ## Installation & Usage
 
 To install the package, use the following command:
