@@ -6,6 +6,10 @@ from functools import cache
 
 @cache
 def build_predictor():
+    """
+    Build the SAM2 video predictor.
+    """
+    # Check for available device
     if torch.cuda.is_available():
         device = torch.device("cuda")
         torch.autocast("cuda", dtype=torch.bfloat16).__enter__()
@@ -18,6 +22,7 @@ def build_predictor():
     else:
         device = torch.device("cpu")
 
+    # Download the model if not already present
     os.makedirs('../checkpoints/', exist_ok=True)
 
     if not os.path.exists('../checkpoints/sam2.1_hiera_large.pt'):
@@ -27,12 +32,16 @@ def build_predictor():
     sam2_checkpoint = "../checkpoints/sam2.1_hiera_large.pt"
     model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
 
+    # Build the predictor
     predictor = build_sam2_video_predictor(model_cfg, sam2_checkpoint, device=device)
 
     return predictor
 
 
 def propagate_in_video(predictor, inference_state):
+    """
+    Propagate the predictions in the video.
+    """
     video_segments = {}
     for out_frame_idx, out_obj_ids, out_mask_logits in predictor.propagate_in_video(inference_state):
         video_segments[out_frame_idx] = {

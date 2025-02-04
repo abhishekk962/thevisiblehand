@@ -12,6 +12,9 @@ from thevisiblehand.hand_masking import build_predictor, propagate_in_video
 
 
 class VideoProcessor():
+    """
+    A class to process a video file, detect hands using Mediapipe, and mask them using the Segment Anything Model 2 (SAM2).
+    """
     def __init__(self, in_filepath, out_filepath, num_hands=2, method='single'):
         self.in_filepath = in_filepath
         self.out_filepath = out_filepath
@@ -28,6 +31,9 @@ class VideoProcessor():
         self.inference_state = self.predictor.init_state(video_path=self.video_dir)
 
     def process_video(self):
+        """
+        Process the video by detecting hands, masking them and saving the output in the specified directory.
+        """
         if self.method == 'single':
             add_unique_prompts_to_each_hand(self.detector, self.inference_state, self.frame_names, self.predictor)
         elif self.method == 'multi':
@@ -42,6 +48,9 @@ class VideoProcessor():
         self.predictor.reset_state(self.inference_state)
         
     def preview_results(self):
+        """
+        Preview the results of the hand detection and masking and save the preview in the specified directory.
+        """
         if self.method == 'single':
             results = add_unique_prompts_to_each_hand(self.detector, self.inference_state, self.frame_names, self.predictor)
         elif self.method == 'multi':
@@ -53,6 +62,9 @@ class VideoProcessor():
     
 
 def save_output_video(video_segments, out_filepath, frame_names, fps):
+    """
+    Save the output video with masked hands.
+    """
     if os.path.exists(out_filepath):
         os.remove(out_filepath)
     with imageio.get_writer(out_filepath, fps=fps) as writer:
@@ -69,8 +81,12 @@ def save_output_video(video_segments, out_filepath, frame_names, fps):
             img_array = np.array(Image.open(buf))
             writer.append_data(img_array)
             plt.close()
+    print(f"Output video saved at {out_filepath}")
 
 def add_unique_prompts_to_each_hand(detector, inference_state, frame_names, predictor):
+    """
+    Add prompts with unique object ID to each hand detected in the first frame.
+    """
     ann_frame_idx = 0
     ann_obj_id = 0
     prompts = {}
@@ -78,6 +94,7 @@ def add_unique_prompts_to_each_hand(detector, inference_state, frame_names, pred
     image = mp.Image.create_from_file(frame_names[ann_frame_idx])
     detection_result = detector.detect(image)
     pts = extract_hand_coordinates(image.numpy_view(), detection_result)
+    # Add a unique object ID for each hand
     for pt in pts:
         ann_obj_id += 1
         points = np.array([pt], dtype=np.float32)
@@ -100,6 +117,10 @@ def add_unique_prompts_to_each_hand(detector, inference_state, frame_names, pred
     return results
 
 def add_prompts_to_multiple_frames(detector, inference_state, frame_names, predictor):
+    """
+    Add prompts to multiple frames and select frames which have lower mask entropy for actual prompting.
+    """
+    # Add prompts to 5 frames
     ann_obj_id = 1
     frames = {}
     predictor.reset_state(inference_state)
@@ -119,10 +140,13 @@ def add_prompts_to_multiple_frames(detector, inference_state, frame_names, predi
         )
         frames[ann_frame_idx] = calculate_mask_entropy(out_mask_logits)
         prompts[ann_obj_id] = points, labels
-        
+    
+    # Filter out frames with low entropy
     frames = filter_low_entropy(frames)
     predictor.reset_state(inference_state)
     results = []
+
+    # Use the filtered frames for prompting
     for ann_frame_idx in frames:
         prompts = {}
         image = mp.Image.create_from_file(frame_names[ann_frame_idx])

@@ -2,6 +2,7 @@ import argparse
 from thevisiblehand import VideoProcessor
 
 def main():
+    # Parse command line arguments
     parser = argparse.ArgumentParser(description="A tool to mask hands in videos.")
     parser.add_argument("input_file_path", type=str, help="Path to the input video file.")
     parser.add_argument("output_file_path", type=str, help="Path to save the output video file.")
@@ -11,11 +12,14 @@ def main():
 
     args = parser.parse_args()
 
+    # Create a VideoProcessor instance
     processor = VideoProcessor(args.input_file_path, args.output_file_path, args.num_hands, args.method)
     try:
         if args.preview:
+            # Preview the results of the hand detection and masking
             processor.preview_results()
         else:
+            # Process the complete video
             processor.process_video()
     except Exception as e:
         print(f"Error processing video: {e}")
