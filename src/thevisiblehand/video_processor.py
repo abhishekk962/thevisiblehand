@@ -56,9 +56,11 @@ class VideoProcessor():
         elif self.method == 'multi':
             results = add_prompts_to_multiple_frames(self.detector, self.inference_state, self.frame_names, self.predictor)
 
-        preview_results(results, self.in_filepath, self.frame_names, self.method)
+        results = preview_results(results, self.in_filepath, self.frame_names, self.method)
 
         self.predictor.reset_state(self.inference_state)
+
+        return results
     
 
 def save_output_video(video_segments, out_filepath, frame_names, fps):
